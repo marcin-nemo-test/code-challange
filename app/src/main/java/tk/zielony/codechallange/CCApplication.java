@@ -13,6 +13,6 @@ public class CCApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        DataAPI.init(new WebAPI());
+        DataAPI.init(new LocalAPI());
     }
 }

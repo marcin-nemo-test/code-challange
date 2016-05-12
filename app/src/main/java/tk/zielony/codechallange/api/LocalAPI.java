@@ -47,22 +47,17 @@ public class LocalAPI extends DataAPI {
     protected <Type> Type getInternal(String endpoint, Class<Type> dataClass) throws APIException {
         simulateTraffic();
 
-        if (endpoint.equals(POST)) {
+        if (endpoint.startsWith(POST)) {
             HashMap<String, Object> postMap = resources.get(POST);
             Post[] posts = new Post[postMap.size()];
             postMap.values().toArray(posts);
             return (Type) posts;
-        } else if (endpoint.startsWith(POST)) {
+        } else if (endpoint.startsWith(COMMENT)) {
             // this is a naive implementation for dev purposes
-            String param = endpoint.substring(POST.length());
-            int postId = Integer.parseInt(param.substring(1));
             HashMap<String, Object> commentMap = resources.get(COMMENT);
             List<Comment> result = new ArrayList<>();
-            for (Object obj : commentMap.values()) {
-                Comment c = (Comment) obj;
-                if (c.getPostId() == postId)
-                    result.add(c);
-            }
+            for (Object obj : commentMap.values())
+                result.add((Comment) obj);
             Comment[] resultArray = new Comment[result.size()];
             result.toArray(resultArray);
             return (Type) resultArray;
