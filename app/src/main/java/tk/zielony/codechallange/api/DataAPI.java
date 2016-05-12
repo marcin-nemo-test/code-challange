@@ -12,8 +12,8 @@ import java.util.Queue;
  * Cache can be added here, so all implementations can use it.
  */
 public abstract class DataAPI {
-    protected static final String POST = "/post";
-    protected static final String COMMENT = "/comment";
+    protected static final String POST = "/posts";
+    protected static final String COMMENT = "/comments";
 
     static final Queue<Runnable> taskQueue = new LinkedList<>();
     static Thread networkThread = new Thread() {

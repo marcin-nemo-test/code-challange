@@ -22,6 +22,7 @@ import carbon.widget.Toolbar;
 import pl.zielony.fragmentmanager.Fragment;
 import pl.zielony.fragmentmanager.FragmentManager;
 import tk.zielony.codechallange.R;
+import tk.zielony.codechallange.api.CommentEndpoint;
 import tk.zielony.codechallange.api.data.Comment;
 import tk.zielony.codechallange.api.ExceptionEvent;
 import tk.zielony.codechallange.api.data.Post;
@@ -120,7 +121,7 @@ public class PostCommentsFragment extends Fragment {
     }
 
     private void loadData() {
-        PostEndpoint.get(post.getId());
+        CommentEndpoint.list(post.getId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -7,4 +7,8 @@ import tk.zielony.codechallange.api.data.Comment;
  * Created by Marcin on 2016-05-12.
  */
 public class CommentsEvent extends DataEvent<Comment[]> {
+    @Override
+    public Class<Comment[]> getDataClass() {
+        return Comment[].class;
+    }
 }

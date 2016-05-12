@@ -6,13 +6,12 @@ import tk.zielony.codechallange.postlist.PostListEvent;
 /**
  * Created by Marcin on 2016-05-12.
  */
-public class PostEndpoint {
-    private PostEndpoint() {
-
+public class CommentEndpoint {
+    private CommentEndpoint() {
     }
 
-    public static void list() {
-        DataAPI.get(DataAPI.POST + "?userId=1", new PostListEvent());
+    public static void list(int postId) {
+        DataAPI.get(DataAPI.COMMENT + "?postId=" + postId, new CommentsEvent());
     }
 
 }
