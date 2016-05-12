@@ -19,13 +19,13 @@ public class PostFragment extends Fragment {
     public PostFragment(FragmentManager fragmentManager) {
         super(fragmentManager);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new PostAdapter());
     }
 
     @Override
     protected View onCreateView() {
-        View view =  View.inflate(getContext(), R.layout.fragment_post, null);
+        View view = View.inflate(getContext(), R.layout.fragment_post, null);
         ButterKnife.bind(this, view);
         return view;
     }
