@@ -4,11 +4,15 @@ package tk.zielony.codechallange.api;
  * Created by Marcin on 2016-05-12.
  */
 public class PostEndpoint {
-    public Post[] list() {
-        return null;
+    private PostEndpoint(){
+
     }
 
-    public Post get(int id) {
+    public static void list() {
+        DataAPI.get(DataAPI.POST,new ListEvent());
+    }
+
+    public static Post get(int id) {
         return null;
     }
 }
