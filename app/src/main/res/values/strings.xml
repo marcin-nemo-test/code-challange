@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CodeChallange</string>
+    <string name="cc_posts">Posts</string>
+    <string name="cc_comments">Comments</string>
 </resources>

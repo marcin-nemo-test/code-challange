@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <carbon.widget.Toolbar
+        android:text="@string/cc_comments"
+        android:id="@+id/cc_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/carbon_toolbarHeight" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/cc_swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <carbon.widget.RecyclerView
+            android:id="@+id/cc_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</carbon.widget.LinearLayout>
