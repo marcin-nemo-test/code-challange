@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/carbon_padding"
+    app:carbon_rippleColor="?attr/carbon_rippleColor">
+
+    <carbon.widget.TextView
+        android:id="@+id/cc_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textAppearance="?attr/carbon_textAppearanceHeadline" />
+
+    <carbon.widget.TextView
+        android:id="@+id/cc_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/carbon_textAppearanceBody1" />
+
+    <carbon.widget.TextView
+        android:id="@+id/cc_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/carbon_textAppearanceCaption" />
+
+</carbon.widget.LinearLayout>

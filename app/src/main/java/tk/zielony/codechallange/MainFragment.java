@@ -26,13 +26,13 @@ import tk.zielony.codechallange.api.PostEndpoint;
 public class MainFragment extends Fragment {
     private static final String TAG = MainFragment.class.getSimpleName();
 
-    private final PostAdapter adapter;
-
     @BindView(R.id.cc_recycler)
     RecyclerView recyclerView;
 
     @BindView(R.id.cc_swipeRefresh)
     SwipeRefreshLayout swipeRefresh;
+
+    private final PostAdapter adapter;
 
     public MainFragment(FragmentManager fragmentManager) {
         super(fragmentManager);
