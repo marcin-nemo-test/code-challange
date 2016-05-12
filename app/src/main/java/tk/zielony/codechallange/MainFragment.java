@@ -14,8 +14,10 @@ import butterknife.ButterKnife;
 import carbon.widget.RecyclerView;
 import pl.zielony.fragmentmanager.Fragment;
 import pl.zielony.fragmentmanager.FragmentManager;
+import pl.zielony.fragmentmanager.FragmentState;
 import tk.zielony.codechallange.api.ExceptionEvent;
 import tk.zielony.codechallange.api.ListEvent;
+import tk.zielony.codechallange.api.Post;
 import tk.zielony.codechallange.api.PostEndpoint;
 
 /**
@@ -38,6 +40,13 @@ public class MainFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         adapter = new PostAdapter();
         recyclerView.setAdapter(adapter);
+
+        recyclerView.setOnItemClickedListener(new RecyclerView.OnItemClickedListener() {
+            @Override
+            public void onItemClicked(int i) {
+                openPost(adapter.getItem(i));
+            }
+        });
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -87,6 +96,11 @@ public class MainFragment extends Fragment {
 
     private void loadData() {
         PostEndpoint.list();
+    }
+
+    private void openPost(Post item) {
+        PostFragment fragment = getFragmentManager().replace(PostFragment.class, R.id.cc_root, FragmentState.Mode.Add);
+        fragment.setPost(item);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

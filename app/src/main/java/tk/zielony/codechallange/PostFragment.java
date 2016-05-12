@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import carbon.widget.RecyclerView;
 import pl.zielony.fragmentmanager.Fragment;
 import pl.zielony.fragmentmanager.FragmentManager;
+import tk.zielony.codechallange.api.Post;
 
 /**
  * Created by Marcin on 2016-05-12.
@@ -15,6 +16,7 @@ import pl.zielony.fragmentmanager.FragmentManager;
 public class PostFragment extends Fragment {
     @BindView(R.id.cc_recycler)
     RecyclerView recyclerView;
+    private Post post;
 
     public PostFragment(FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -28,5 +30,9 @@ public class PostFragment extends Fragment {
         View view = View.inflate(getContext(), R.layout.fragment_post, null);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 }
