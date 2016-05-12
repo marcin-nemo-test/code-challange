@@ -1,4 +1,4 @@
-package tk.zielony.codechallange;
+package tk.zielony.codechallange.postlist;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,16 +21,17 @@ import carbon.widget.RecyclerView;
 import pl.zielony.fragmentmanager.Fragment;
 import pl.zielony.fragmentmanager.FragmentManager;
 import pl.zielony.fragmentmanager.FragmentState;
+import tk.zielony.codechallange.R;
 import tk.zielony.codechallange.api.ExceptionEvent;
-import tk.zielony.codechallange.api.ListEvent;
-import tk.zielony.codechallange.api.Post;
+import tk.zielony.codechallange.api.data.Post;
 import tk.zielony.codechallange.api.PostEndpoint;
+import tk.zielony.codechallange.postcomments.PostCommentsFragment;
 
 /**
  * Created by Marcin on 2016-05-12.
  */
-public class MainFragment extends Fragment {
-    private static final String TAG = MainFragment.class.getSimpleName();
+public class PostListFragment extends Fragment {
+    private static final String TAG = PostListFragment.class.getSimpleName();
     private static final String LIST = "list";
 
     @BindView(R.id.cc_recycler)
@@ -41,7 +42,7 @@ public class MainFragment extends Fragment {
 
     private final PostAdapter adapter;
 
-    public MainFragment(FragmentManager fragmentManager) {
+    public PostListFragment(FragmentManager fragmentManager) {
         super(fragmentManager);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -70,6 +71,9 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+    /**
+     * this method is called only once, after creation
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -83,18 +87,27 @@ public class MainFragment extends Fragment {
         EventBus.getDefault().register(this);
     }
 
+    /**
+     * this method is called every time this fragment starts except the first time
+     */
     @Override
     protected void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
     }
 
+    /**
+     * this method is called every time this fragment finishes except the last time
+     */
     @Override
     protected void onPause() {
         super.onPause();
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * this method is called when the fragment won't be used anymore
+     */
     @Override
     protected void onFinish() {
         super.onFinish();
@@ -106,12 +119,12 @@ public class MainFragment extends Fragment {
     }
 
     private void openPost(Post item) {
-        PostFragment fragment = getFragmentManager().replace(PostFragment.class, R.id.cc_root, FragmentState.Mode.Add);
+        PostCommentsFragment fragment = getFragmentManager().replace(PostCommentsFragment.class, R.id.cc_root, FragmentState.Mode.Add);
         fragment.setPost(item);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onList(ListEvent event) {
+    public void onList(PostListEvent event) {
         adapter.setItems(event.getData());
         adapter.notifyDataSetChanged();
         swipeRefresh.setRefreshing(false);
@@ -119,6 +132,7 @@ public class MainFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onException(ExceptionEvent event) {
+        // I should show a Snackbar here
         Log.e(TAG, "api exception", event.getException());
         swipeRefresh.setRefreshing(false);
     }
@@ -129,6 +143,7 @@ public class MainFragment extends Fragment {
         try {
             bundle.putString(LIST, new ObjectMapper().writeValueAsString(adapter.getItems()));
         } catch (JsonProcessingException e) {
+            // no time for exception handling
             e.printStackTrace();
         }
     }
@@ -140,6 +155,7 @@ public class MainFragment extends Fragment {
             adapter.setItems(new ObjectMapper().readValue(bundle.getString(LIST), Post[].class));
             adapter.notifyDataSetChanged();
         } catch (IOException e) {
+            // no time for exception handling
             e.printStackTrace();
         }
     }

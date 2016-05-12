@@ -1,4 +1,4 @@
-package tk.zielony.codechallange;
+package tk.zielony.codechallange.postcomments;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,17 +21,17 @@ import carbon.widget.RecyclerView;
 import carbon.widget.Toolbar;
 import pl.zielony.fragmentmanager.Fragment;
 import pl.zielony.fragmentmanager.FragmentManager;
-import tk.zielony.codechallange.api.Comment;
-import tk.zielony.codechallange.api.CommentsEvent;
+import tk.zielony.codechallange.R;
+import tk.zielony.codechallange.api.data.Comment;
 import tk.zielony.codechallange.api.ExceptionEvent;
-import tk.zielony.codechallange.api.Post;
+import tk.zielony.codechallange.api.data.Post;
 import tk.zielony.codechallange.api.PostEndpoint;
 
 /**
  * Created by Marcin on 2016-05-12.
  */
-public class PostFragment extends Fragment {
-    private static final String TAG = PostFragment.class.getSimpleName();
+public class PostCommentsFragment extends Fragment {
+    private static final String TAG = PostCommentsFragment.class.getSimpleName();
     private static final String LIST = "list";
 
     @BindView(R.id.cc_recycler)
@@ -47,7 +47,7 @@ public class PostFragment extends Fragment {
 
     private final CommentAdapter adapter;
 
-    public PostFragment(FragmentManager fragmentManager) {
+    public PostCommentsFragment(FragmentManager fragmentManager) {
         super(fragmentManager);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -83,25 +83,36 @@ public class PostFragment extends Fragment {
         loadData();
     }
 
-
+    /**
+     * this method is called only once, after creation
+     */
     @Override
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
     }
 
+    /**
+     * this method is called every time this fragment starts except the first time
+     */
     @Override
     protected void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
     }
 
+    /**
+     * this method is called every time this fragment finishes except the last time
+     */
     @Override
     protected void onPause() {
         super.onPause();
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * this method is called when the fragment won't be used anymore
+     */
     @Override
     protected void onFinish() {
         super.onFinish();
@@ -121,6 +132,7 @@ public class PostFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onException(ExceptionEvent event) {
+        // Snackbar anyone?
         Log.e(TAG, "api exception", event.getException());
         swipeRefresh.setRefreshing(false);
     }
@@ -131,6 +143,7 @@ public class PostFragment extends Fragment {
         try {
             bundle.putString(LIST, new ObjectMapper().writeValueAsString(adapter.getItems()));
         } catch (JsonProcessingException e) {
+            // handle it? nah, don't have time
             e.printStackTrace();
         }
     }
@@ -142,6 +155,7 @@ public class PostFragment extends Fragment {
             adapter.setItems(new ObjectMapper().readValue(bundle.getString(LIST), Comment[].class));
             adapter.notifyDataSetChanged();
         } catch (IOException e) {
+            // handle it? nah, don't have time
             e.printStackTrace();
         }
     }

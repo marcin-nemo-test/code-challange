@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import tk.zielony.codechallange.api.data.Comment;
+import tk.zielony.codechallange.api.data.Post;
+
 /**
  * Created by Marcin on 2016-05-12.
  */
@@ -30,11 +33,11 @@ public class LocalAPI extends DataAPI {
         try {
             Post[] posts = om.readValue(postJSON, Post[].class);
             for (Post p : posts)
-                resources.get(POST).put("/" + p.id, p);
+                resources.get(POST).put("/" + p.getId(), p);
 
             Comment[] comments = om.readValue(commentJSON, Comment[].class);
             for (Comment c : comments)
-                resources.get(COMMENT).put("/" + c.id, c);
+                resources.get(COMMENT).put("/" + c.getId(), c);
         } catch (IOException e) {
             e.printStackTrace();
         }

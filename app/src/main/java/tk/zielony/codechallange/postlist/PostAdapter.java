@@ -1,4 +1,4 @@
-package tk.zielony.codechallange;
+package tk.zielony.codechallange.postlist;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import carbon.widget.TextView;
-import tk.zielony.codechallange.api.Post;
+import tk.zielony.codechallange.R;
+import tk.zielony.codechallange.api.data.Post;
 
 /**
  * Created by Marcin on 2016-05-12.

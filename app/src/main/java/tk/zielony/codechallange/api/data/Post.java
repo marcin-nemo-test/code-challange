@@ -1,4 +1,4 @@
-package tk.zielony.codechallange.api;
+package tk.zielony.codechallange.api.data;
 
 /**
  * Created by Marcin on 2016-05-12.
