@@ -2,7 +2,10 @@ package tk.zielony.codechallange.api;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -38,6 +41,8 @@ public abstract class DataAPI {
 
     protected static DataAPI instance;
 
+    static Map<Object, Object> cache = Collections.synchronizedMap(new HashMap<>());
+
     public static void init(DataAPI implementation) {
         instance = implementation;
         networkThread.start();
@@ -54,13 +59,25 @@ public abstract class DataAPI {
         }
     }
 
+    /**
+     * here we can add a simple response cache. The real response will be sent as well
+     *
+     * @param endpoint
+     * @param event
+     * @param <Type2>
+     */
     public static <Type2> void get(final String endpoint, final DataEvent<Type2> event) {
+        if (cache.containsKey(endpoint)) {
+            event.setData((Type2) cache.get(endpoint));
+            EventBus.getDefault().post(event);
+        }
         addTask(new Runnable() {
             @Override
             public void run() {
                 try {
                     Type2 data = instance.getInternal(endpoint, event.getDataClass());
                     event.setData(data);
+                    cache.put(endpoint, data);
                     EventBus.getDefault().post(event);
                 } catch (Exception e) {
                     EventBus.getDefault().post(new ExceptionEvent(e));
