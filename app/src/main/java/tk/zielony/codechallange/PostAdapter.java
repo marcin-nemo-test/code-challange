@@ -57,6 +57,10 @@ public class PostAdapter extends carbon.widget.RecyclerView.Adapter<PostAdapter.
         return 0;
     }
 
+    public Post[] getItems() {
+        return items;
+    }
+
     class ViewHolder extends carbon.widget.RecyclerView.ViewHolder {
         @BindView(R.id.cc_title)
         public TextView title;

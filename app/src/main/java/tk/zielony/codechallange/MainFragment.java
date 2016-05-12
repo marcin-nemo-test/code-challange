@@ -1,13 +1,19 @@
 package tk.zielony.codechallange;
 
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +31,7 @@ import tk.zielony.codechallange.api.PostEndpoint;
  */
 public class MainFragment extends Fragment {
     private static final String TAG = MainFragment.class.getSimpleName();
+    private static final String LIST = "list";
 
     @BindView(R.id.cc_recycler)
     RecyclerView recyclerView;
@@ -115,4 +122,26 @@ public class MainFragment extends Fragment {
         Log.e(TAG, "api exception", event.getException());
         swipeRefresh.setRefreshing(false);
     }
+
+    @Override
+    public void onSaveState(Bundle bundle) {
+        super.onSaveState(bundle);
+        try {
+            bundle.putString(LIST, new ObjectMapper().writeValueAsString(adapter.getItems()));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRestoreState(Bundle bundle) {
+        super.onRestoreState(bundle);
+        try {
+            adapter.setItems(new ObjectMapper().readValue(bundle.getString(LIST), Post[].class));
+            adapter.notifyDataSetChanged();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

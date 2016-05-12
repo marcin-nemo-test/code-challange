@@ -59,6 +59,10 @@ public class CommentAdapter extends carbon.widget.RecyclerView.Adapter<CommentAd
         return 0;
     }
 
+    public Comment[] getItems() {
+        return items;
+    }
+
     class ViewHolder extends carbon.widget.RecyclerView.ViewHolder {
         @BindView(R.id.cc_name)
         public TextView name;
